@@ -1,15 +1,22 @@
-/* header.css */
+/* ===========================================
+   HEADER STYLES
+   Sticky header and icon replacements
+   =========================================== */
+
+/* --- STICKY HEADER --- */
 #header-wrapper {
     position: sticky !important;
     top: 0 !important;
     z-index: 1000 !important;
     background-color: #ffffff !important;
 }
+
 .header-wrapper.fixed-header .app-header {
     animation: none !important;
 }
 
-/* Replace Cart Icon with Shopping Bag */
+
+/* --- SHOPPING CART ICON REPLACEMENT --- */
 .yc-shopping-cart::before {
     content: '' !important;
     display: inline-block;
@@ -20,11 +27,13 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
 .yc-shopping-cart {
     font-size: 0 !important;
 }
 
-/* Replace Menu Icon (Hamburger) */
+
+/* --- MENU ICON REPLACEMENT (HAMBURGER) --- */
 .header-switcher .yc-menu::before {
     content: '' !important;
     display: inline-block;
@@ -35,6 +44,7 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
 .header-switcher .yc-menu {
     font-size: 0 !important;
 }
