@@ -101,7 +101,7 @@
 /* This one rule now controls everything about the second badge */
 .best-value::before {
     /* The Text */
-    content: ; /* I corrected the text for you */
+    content: test; /* I corrected the text for you */
 
     /* The Styling */
     position: absolute;
