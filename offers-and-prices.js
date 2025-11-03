@@ -1,14 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // A delay to ensure all product information is loaded by the theme
-    setTimeout(function() {
-        // --- PART 1: ADD BADGES (No changes needed here) ---
-        const offerLabels = document.querySelectorAll('.textual-button label');
-        if (offerLabels.length > 1) {
-            offerLabels[1].classList.add('best-offer');
-        }
-        if (offerLabels.length > 2) {
-            offerLabels[2].classList.add('best-value');
-        }
+    // --- PART 1: ADD BADGES (Corrected Version) ---
+const offerLabels = document.querySelectorAll('.textual-button label');
+
+// CRITICAL FIX: First, remove any badge classes the theme might have added.
+offerLabels.forEach(label => {
+    label.classList.remove('best-offer', 'best-value');
+});
+
+// Now, add our own classes to the correct elements.
+if (offerLabels.length > 1) {
+    offerLabels[1].classList.add('best-offer');
+}
+if (offerLabels.length > 2) {
+    offerLabels[2].classList.add('best-value');
+}
 
         // --- PART 2: ADD PRICES (CORRECTED VERSION) ---
 
