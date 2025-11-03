@@ -33,43 +33,57 @@
 }
 
 
-/* --- OFFER BOXES LAYOUT --- */
+/* --- MAIN CONTAINER FOR ALL OFFERS --- */
+/* This forces the offers to stack vertically instead of being side-by-side */
 .textual-buttons-container {
-    display: inline-grid !important;
-    flex-direction: column;
-    gap: 15px;
+    display: inline-grid !important; 
+    flex-direction: column; /* This is the key fix for vertical layout */
+    gap: 15px; /* This adds space between each offer box */
     width: 100%;
 }
 
+/* --- INDIVIDUAL OFFER BOX STYLE --- */
+/* This styles each of your offer boxes to be full width */
 [dir] .textual-button label {
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: var(--dark-primary-color);
+    border: 2px solid #e0e0e0; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: var(--dark-primary-color); /* White background */
     padding: 10px;
     height: auto;
-    width: 100%;
+    width: 100%; /* Makes all boxes the same full width */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.1s ease;
-    box-sizing: border-box;
+    transition: all 0.1s ease; /* Smooth animation */
+    box-sizing: border-box; /* Important for consistent sizing */
 }
 
+/* --- SELECTED OFFER STYLE --- */
+/* This highlights the box when a customer clicks on it */
 .single-product .textual-button [type=radio]:checked + label {
     background-color: var(--light-primary-color) !important;
-    border-color: var(--primary-color) !important;
-    box-shadow: 0 0 0 2px var(--primary-color);
+    border-color: var(--primary-color) !important; /* Your theme's red highlight color */
+    box-shadow: 0 0 0 2px var(--primary-color); /* Adds a red "glow" effect */
     color: #000000;
 }
 
 
-/* --- OFFER BADGES --- */
+/* --- IMPROVED BADGE STYLES (INDEPENDENT BADGES) --- */
+
+/* This rule still prepares the offer box for a badge */
 .best-offer, .best-value {
     position: relative;
+    border-color:  !important; /* Makes border red when a badge is active */
 }
 
+
+/* --- BADGE 1: "Best Offer" --- */
+/* This one rule now controls everything about the first badge */
 .best-offer::before {
+    /* The Text */
     content: 'أفضل عرض';
+
+    /* The Styling */
     position: absolute;
     top: -13px;
     right: 16px;
@@ -82,8 +96,14 @@
     transform: skew(-4deg, 3deg);
 }
 
+
+/* --- BADGE 2: "Best Value" --- */
+/* This one rule now controls everything about the second badge */
 .best-value::before {
-    content: ;
+    /* The Text */
+    content: ; /* I corrected the text for you */
+
+    /* The Styling */
     position: absolute;
     top: -13px;
     right: 16px;
@@ -97,41 +117,50 @@
 }
 
 
-/* --- PRICE DISPLAY IN OFFERS --- */
+/* --- PRICE STYLING INSIDE THE OFFER BOX --- */
+
+/* This styles the container for the two prices */
 .offer-price-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: column; /* Stacks current price above before price */
+    align-items: flex-end; /* Aligns both lines to the right */
     text-align: right;
+    /* This adds a little space to the left of the prices */
     padding-left: 10px;
     padding-right: 10px;
+    /* This prevents the price from shrinking if the offer title is long */
     flex-shrink: 0;
 }
 
+/* This is the key fix: it makes the price and currency sit side-by-side */
 .offer-price-container .current-price,
 .offer-price-container .before-price {
     display: flex;
-    justify-content: flex-end;
-    align-items: baseline;
-    white-space: nowrap;
+    justify-content: flex-end; /* Aligns content to the right */
+    align-items: baseline; /* Aligns text neatly */
+    white-space: nowrap; /* Prevents text from wrapping */
 }
 
+/* This styles the current price (the larger one) */
 .offer-price-container .current-price {
     font-size: 15px;
     font-weight: bold;
-    color: #000000;
+    color: #000000; /* Black color for the price */
 }
 
+/* This styles the original price (the smaller, crossed-out one) */
 .offer-price-container .before-price {
     font-size: 14px;
-    color: #757575;
-    text-decoration: line-through;
+    color: #757575; /* Grey color for the old price */
+    text-decoration: line-through; /* This crosses it out */
     opacity: 0.9;
 }
 
+/* This makes sure the offer title and the new price are positioned correctly */
 [dir] .textual-button label {
-    justify-content: space-between;
+    justify-content: space-between; /* Pushes title to left, price to right */
 }
+
 
 
 /* --- BUNDLE HEADING WITH LINES --- */
