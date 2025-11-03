@@ -185,7 +185,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 }, 1000); // Increased initial delay
 });
-
-    }, 800);
-  });
-})();
