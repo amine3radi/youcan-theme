@@ -1,0 +1,41 @@
+/* ===========================================
+   MOBILE-SPECIFIC STYLES
+   Banner images, responsive adjustments
+   =========================================== */
+
+@media (max-width: 576px) {
+    /* Hide desktop images on mobile */
+    .slider-container .slide img.desktop-image,
+    .slider-container .slide img.hidden-desktop {
+        display: none !important;
+    }
+    
+    /* Show mobile images */
+    .slider-container .slide img.mobile-image {
+        display: block !important;
+    }
+    
+    /* Fixed height for mobile banner */
+    .slider-container.horizontal {
+        height: 500px !important;
+        min-height: auto !important;
+        max-height: none !important;
+    }
+    
+    .slider-container .slide {
+        height: 100% !important;
+    }
+    
+    /* Make image fill the frame */
+    .slider-container .slide img.mobile-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@media (min-width: 768px) {
+    .slider-container {
+        height: auto;
+    }
+}
