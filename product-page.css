@@ -83,7 +83,7 @@
 }
 
 .best-value::before {
-    content: 'أفضل قيمة';
+    content: ;
     position: absolute;
     top: -13px;
     right: 16px;
