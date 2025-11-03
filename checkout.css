@@ -1,0 +1,47 @@
+/* checkout.css - checkout form, inputs, buy button, trust badges */
+.checkout-form input[type="text"],
+.checkout-form input[type="tel"],
+.checkout-form input[type="email"],
+.checkout-form input[type="number"],
+.checkout-form textarea {
+  border: 1px solid #565656 !important;
+  background-color: #ededed !important;
+  color: #000000 !important;
+}
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder { color: #747474 !important; }
+.checkout-form input:focus, .checkout-form textarea:focus { outline: none; border-color: #333333 !important; }
+
+[dir="rtl"] .checkout-form input[name="phone"] { text-align: right !important; }
+[dir="ltr"] .checkout-form input[name="phone"] { text-align: left !important; }
+
+/* checkout layout */
+.checkout-form { position: relative; margin-top: 50px; }
+.checkout-form::before {
+    content: ''; position: absolute; top: -25px; left: 50%; transform: translateX(-50%);
+    width: 100%; height: 2px; background-color: var(--primary-color);
+}
+.checkout-form .checkout-heading { font-weight: 600 !important; text-align: center; margin-bottom: 20px; }
+.checkout-form .checkout-groups { width: 75% !important; margin: 0 auto !important; display: block !important; }
+.checkout-form .form-group { width: 100% !important; flex-basis: 100% !important; padding: 0 !important; margin-bottom: 15px; }
+.checkout-form .form-group:last-child { margin-bottom: 0 !important; }
+
+/* icons inside inputs */
+.checkout-form .form-group input { padding-right: 45px !important; background-repeat: no-repeat; background-position: right 15px center; background-size: 20px; }
+.checkout-form .form-group input[name*="name"] { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"...></svg>'); }
+.checkout-form .form-group input[name*="phone"] { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"...></svg>'); }
+.checkout-form .form-group input[name*="address"], .checkout-form .form-group input[name*="city"] { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"...></svg>'); }
+
+/* buy button container */
+.add-to-cart-section { width: 75% !important; margin: 0px auto 0 auto !important; padding: 0 !important; }
+.add-to-cart-section .single-submit { width: 100% !important; border-radius: 5px !important; }
+
+/* trust badges container (placeholder) */
+#trust-badges-container {
+    display: flex; justify-content: center; align-items: center; gap: 8px;
+    margin-bottom: 20px; padding: 10px; border-radius: 8px; width: 75%; margin-left:auto; margin-right:auto; flex-wrap:wrap;
+}
+#trust-badges-container img { height: 28px !important; width:auto; max-width:50px; object-fit:contain; }
+
+/* prevent iphone zoom */
+.checkout-form input, .checkout-form textarea { font-size: 16px !important; }
