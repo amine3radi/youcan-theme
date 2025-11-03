@@ -1,96 +1,54 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // --- PART 1: ADD BADGES (Corrected Version) ---
-const offerLabels = document.querySelectorAll('.textual-button label');
+// This file now only DEFINES the function. It does not run itself.
+function initOfferCustomizations() {
+    
+    // PART 1: ADD BADGES
+    const offerLabels = document.querySelectorAll('.textual-button label');
+    // First, clean any existing classes from the theme
+    offerLabels.forEach(label => label.classList.remove('best-offer', 'best-value'));
+    // Now, add our own
+    if (offerLabels.length > 1) offerLabels[1].classList.add('best-offer');
+    if (offerLabels.length > 2) offerLabels[2].classList.add('best-value');
 
-// CRITICAL FIX: First, remove any badge classes the theme might have added.
-offerLabels.forEach(label => {
-    label.classList.remove('best-offer', 'best-value');
-});
+    // PART 2: ADD PRICES (Your working "slow clicker" script)
+    const currency = document.querySelector('.single-product .single-price .currency')?.textContent || 'ريال سعودي';
+    const variantInputs = document.querySelectorAll('.single-variant [type=radio]');
+    let originallySelected = document.querySelector('.single-variant [type=radio]:checked') || (variantInputs.length > 0 ? variantInputs[0] : null);
+    let variantPrices = [], currentIndex = 0;
 
-// Now, add our own classes to the correct elements.
-if (offerLabels.length > 1) {
-    offerLabels[1].classList.add('best-offer');
-}
-if (offerLabels.length > 2) {
-    offerLabels[2].classList.add('best-value');
-}
-
-        // --- PART 2: ADD PRICES (CORRECTED VERSION) ---
-
-        // Get currency from the page using a more specific selector
-        const currencyElement = document.querySelector('.single-price .after .currency');
-        const currency = currencyElement ? currencyElement.textContent.trim() : 'ريال سعودي';
-        
-        const variantInputs = document.querySelectorAll('.single-variant [type=radio]');
-        let originallySelected = document.querySelector('.single-variant [type=radio]:checked') || (variantInputs.length > 0 ? variantInputs[0] : null);
-        
-        let variantPrices = [];
-        let currentIndex = 0;
-        
-        function getPriceForVariant(input, index) {
-            if (!input) return; // Stop if there's no input
-            
-            input.checked = true;
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-            
-            // Wait for the theme to update the price in the DOM
-            setTimeout(function() {
-                // --- THIS IS THE CRITICAL FIX ---
-                // Use the specific ".after .value" selector for the current price
-                const currentPriceNode = document.querySelector('.single-price .after .value');
-                const currentPrice = currentPriceNode ? currentPriceNode.textContent.trim() : '';
-
-                // The selector for the "before" price was already correct
-                const beforePriceNode = document.querySelector('.single-price .before .value');
-                const beforePrice = beforePriceNode ? beforePriceNode.textContent.trim() : '';
-                
-                variantPrices[index] = { current: currentPrice, before: beforePrice };
-                
-                console.log(`Variant ${index + 1}: Current=${currentPrice}, Before=${beforePrice}`);
-                
-                currentIndex++;
-                
-                if (currentIndex < variantInputs.length) {
-                    getPriceForVariant(variantInputs[currentIndex], currentIndex);
-                } else {
-                    addPricesToLabels();
-                    
-                    // Restore the original selection
-                    setTimeout(function() {
-                        if (originallySelected) {
-                            originallySelected.checked = true;
-                            originallySelected.dispatchEvent(new Event('change', { bubbles: true }));
-                        }
-                    }, 200);
-                }
-            }, 500); // Using a slightly safer 500ms delay
-        }
-        
-        function addPricesToLabels() {
-            variantInputs.forEach(function(input, index) {
-                const label = document.querySelector(`label[for="${input.id}"]`);
-                const priceData = variantPrices[index];
-                
-                if (label && priceData && priceData.current && !label.querySelector('.offer-price-container')) {
-                    const priceContainer = document.createElement('div');
-                    priceContainer.className = 'offer-price-container';
-                    
-                    let priceHTML = `<span class="current-price">${priceData.current} ${currency}</span>`;
-                    
-                    if (priceData.before) {
-                        priceHTML += `<span class="before-price">${priceData.before} ${currency}</span>`;
+    function getPriceForVariant(input, index) {
+        input.checked = true;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+        setTimeout(() => {
+            const currentPrice = document.querySelector('.single-product .single-price .value')?.textContent || '';
+            const beforePrice = document.querySelector('.single-product .before.currency-value .value')?.textContent || '';
+            variantPrices[index] = { current: currentPrice, before: beforePrice };
+            currentIndex++;
+            if (currentIndex < variantInputs.length) {
+                getPriceForVariant(variantInputs[currentIndex], currentIndex);
+            } else {
+                addPricesToLabels();
+                setTimeout(() => {
+                    if (originallySelected) {
+                        originallySelected.checked = true;
+                        originallySelected.dispatchEvent(new Event('change', { bubbles: true }));
                     }
-                    
-                    priceContainer.innerHTML = priceHTML;
-                    label.appendChild(priceContainer);
-                }
-            });
-        }
-        
-        if (variantInputs.length > 0) {
-            getPriceForVariant(variantInputs[0], 0);
-        }
+                }, 200);
+            }
+        }, 500); // A safer delay
+    }
 
-    }, 1000); // Initial delay before starting
-});
-</script>
+    function addPricesToLabels() {
+        variantInputs.forEach((input, index) => {
+            const label = document.querySelector(`label[for="${input.id}"]`);
+            if (label && !label.querySelector('.offer-price-container') && variantPrices[index] && variantPrices[index].current) {
+                const priceContainer = document.createElement('div');
+                priceContainer.className = 'offer-price-container';
+                let priceHTML = `<span class="current-price">${variantPrices[index].current} ${currency}</span>`;
+                if (variantPrices[index].before) priceHTML += `<span class="before-price">${variantPrices[index].before} ${currency}</span>`;
+                priceContainer.innerHTML = priceHTML;
+                label.appendChild(priceContainer);
+            }
+        });
+    }
+    if (variantInputs.length > 0) getPriceForVariant(variantInputs[0], 0);
+}
